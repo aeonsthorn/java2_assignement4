@@ -1,80 +1,78 @@
 package com.mcgill;
 
-public class Order {
-
-}
+public class Order {}
 
 interface Computer {
-    public String getDescription();
+  public String getDescription();
 
-    public double getPrice();
+  public double getPrice();
 
-    public String getOrderID();
+  public String getOrderID();
 }
 
 class DefaultComputer implements Computer {
-    @Override
-    public String getDescription() {
-        return "Default Computer";
-    }
 
-    @Override
-    public double getPrice() {
-        return 700.00;
-    }
+  private String description = "Default Computer";
+  private double price = 700.00;
+  private String orderID;
 
-    @Override
-    public String getOrderID() {
-        return "1";
-    }
+  @Override
+  public String getDescription() {
+    return description;
+  }
+
+  @Override
+  public double getPrice() {
+    return price;
+  }
+
+  @Override
+  public String getOrderID() {
+    return orderID;
+  }
+
+  public DefaultComputer(String orderID) {
+    this.orderID = orderID;
+  }
 }
 
 class ComputerDecorator implements Computer {
 
-    Computer currentComputer;
+  Computer currentComputer;
 
-    public ComputerDecorator(Computer computer) {
-        currentComputer = computer;
-    }
+  public ComputerDecorator(Computer computer) {
+    currentComputer = computer;
+  }
 
-    public double getPrice() {
-        return currentComputer.getPrice();
-    }
+  public double getPrice() {
+    return currentComputer.getPrice();
+  }
 
-    public String getDescription() {
-        return currentComputer.getDescription();
-    }
+  public String getDescription() {
+    return currentComputer.getDescription();
+  }
 
-    public String getOrderID() {
-        return currentComputer.getOrderID();
-    }
-
+  public String getOrderID() {
+    return currentComputer.getOrderID();
+  }
 }
 
 class Component extends ComputerDecorator {
 
-    public Component(Computer computer) {
-        super(computer);
-    }
+  private String componentDescription;
+  private double componentPrice;
 
-    public String getDescription() {
-        return super.getDescription() + "Component";
-    }
+  public Component(Computer computer, String description, double price) {
+    super(computer);
+    this.componentDescription = description;
+    this.componentPrice = price;
+  }
 
-    public double getPrice() {
-        return super.getPrice() + 9000.00;
-    }
+  public String getDescription() {
+    return super.getDescription() + " + " + componentDescription;
+  }
 
-}
-
-class Mouse extends Component {
-
-    public Mouse(Computer computer) {
-        super(computer);
-    }
-
-    private String description = "Mouse";
-    private double price = 39.99;
-    private String orderID = "1";
-
+  public double getPrice() {
+    return super.getPrice() + componentPrice;
+  }
 }
